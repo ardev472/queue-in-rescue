@@ -1,5 +1,3 @@
-
-
 var http = require('http');
 var express = require('express');
 var session = require('express-session');
@@ -28,7 +26,6 @@ process.env.DB_NAME = process.env.DB_NAME || 'node-login';
 if (app.get('env') != 'live'){
 	process.env.DB_URL = 'mongodb://'+process.env.DB_HOST+':'+process.env.DB_PORT;
 }	else {
-// prepend url with authentication credentials // 
 	process.env.DB_URL = 'mongodb://'+process.env.DB_USER+':'+process.env.DB_PASS+'@'+process.env.DB_HOST+':'+process.env.DB_PORT;
 }
 
