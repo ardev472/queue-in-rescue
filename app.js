@@ -14,12 +14,13 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.set('view engine', 'handlebars');
 app.engine('handlebars', exphbs({defaultLayout:'layout'}));
 
-app.use("/", require('./routes/routes'));
+app.use("/", require('./routes/index'));
+app.use('/users',require('./routes/users'));
 // app.use("/altsub", require('./routes/altsub/routes'));
 
 app.use(express.static(path.join(__dirname, 'public')));
 
-const post = require("./routes/routes");
+const post = require("./routes/index");
 app.use('/page', post);
 
 app.listen(8181, (err) => {
