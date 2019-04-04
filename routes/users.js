@@ -42,5 +42,21 @@ router.post('/register', (req, res) => {
         }
     });
 
+router.post('/login', (req, res) => {
+    User.findOne({ username: req.body.username }).then(user => {
+        if (user) {
+            bcrypt.compare(req.body.password, user.password, (err, matched) => {
+                if (err) {
+                    return err;
+                }
+                if (matched) {
+                    res.send('User Login');
+                } else {
+                    res.send('User not login');
 
+                }
+            });
+        }
+    });
+});
 module.exports = router;
