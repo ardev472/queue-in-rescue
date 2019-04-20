@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const bcrypt = require("bcryptjs");
 const passport = require("passport");
+const LocalStrategy = require("passport-local").Strategy;
 // Load User model
 const User = require("../models/User");
 // Login Page
@@ -42,21 +43,18 @@ router.post('/register', (req, res) => {
         }
     });
 
-router.post('/login', (req, res) => {
-    User.findOne({ username: req.body.username }).then(user => {
-        if (user) {
-            bcrypt.compare(req.body.password, user.password, (err, matched) => {
-                if (err) {
-                    return err;
-                }
-                if (matched) {
-                    res.send('User Login');
-                } else {
-                    res.send('User not login');
-
-                }
-            });
-        }
+passport.use(new LocalStrategy({ usernameField: 'username' }, (username, password, done) => {
+    User.findOne({ username: username }).then(user => {
+        if (!user) return done(null, false, { message: 'No user found' });
+        bcrypt.compare(password, user.password, (err, matched) => {
+            if (err) return err;
+            if (matched) {
+                return done(null, user);
+            } else {
+                return done(null, false, { message: 'Incorrect password' });
+            }
+        });
     });
-});
+}));
+
 module.exports = router;
