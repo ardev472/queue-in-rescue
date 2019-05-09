@@ -13,7 +13,6 @@ router.get("/login", (req, res) => {
 router.get("/register", (req, res) => {
   res.render("register");
 });
-
 router.post('/register', (req, res) => {
     // res.send('Not working');
     const { username, password, password2 } = req.body;
@@ -21,7 +20,6 @@ router.post('/register', (req, res) => {
     if (!username || !password || !password2) {
         res.send("Plaese mark all the fileds");
     }   
-    
      else {
             const newUser = new User({
                 username,
@@ -51,10 +49,9 @@ passport.use(new LocalStrategy({ usernameField: 'username' }, (username, passwor
             if (matched) {
                 return done(null, user);
             } else {
-                return done(null, false, { message: 'Incorrect password' });
+                return done(null, false, { message:  'Incorrect password' });
             }
         });
     });
 }));
-
 module.exports = router;
