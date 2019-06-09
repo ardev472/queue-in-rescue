@@ -36,13 +36,15 @@ passport.deserializeUser(function (id, done) {
 router.get("/login", (req, res) => {
     res.render('login')
 });
-
+router.get("/dashboard",(req,res)=>{
+    res.render("dashboard");
+})
 router.post("/login", (req, res,next) => {
-  passport.authenticate('local',{
-        successRedirect:'/',
-        failureRedirect:'/register',
-        //failureFlash:'true'
-    })(req,res,next);
+  passport.authenticate("local", {
+    successRedirect: "/dashboard",
+    failureRedirect: "/login"
+    //failureFlash:'true'
+  })(req, res, next);
 });
 
 // Register Page

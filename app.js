@@ -24,9 +24,9 @@ app.use("/", require('./routes/index'));
 
 app.use(express.static(path.join(__dirname, 'public')));
 
-const post = require("./routes/index");
+const index = require("./routes/index");
 
-app.use('/page', post);
+app.use('/index', index);
 
 app.listen(3000, (err) => {
     console.log("Listening on port 3000");
