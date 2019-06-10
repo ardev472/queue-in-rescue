@@ -3,6 +3,7 @@ const router = express.Router();
 const User = require('../models/User');
 const bcrypt =require('bcryptjs');
 const passport = require("passport");
+
 const LocalStrategy = require("passport-local").Strategy;
 
 router.get("/", (req, res) => {
@@ -35,9 +36,14 @@ passport.deserializeUser(function (id, done) {
 router.get("/login", (req, res) => {
     res.render('login')
 });
-router.get("/dashboard",(req,res)=>{
-        res.render("dashboard/index");
-})
+
+
+router.get("/dashboard", (req, res) => {
+    res.render('dashboard', {
+        name: req.user.name
+    });
+});    
+
 router.post("/login", (req, res,next) => {
   passport.authenticate("local", {
     successRedirect: "/dashboard",
