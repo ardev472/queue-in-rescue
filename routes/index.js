@@ -15,7 +15,6 @@ passport.use(new LocalStrategy({ usernameField: 'email' }, (email, password, don
 
         bcrypt.compare(password, user.password, (err, matched) => {
             if (err) return err;
-
             if (matched) {
                 return done(null, user)
             } else {
@@ -37,7 +36,7 @@ router.get("/login", (req, res) => {
     res.render('login')
 });
 router.get("/dashboard",(req,res)=>{
-    res.render("dashboard");
+        res.render("dashboard/index");
 })
 router.post("/login", (req, res,next) => {
   passport.authenticate("local", {

@@ -18,9 +18,13 @@ app.engine('handlebars', exphbs({defaultLayout:'layout'}));
 
 app.use(passport.initialize());
 app.use(passport.session());
-app.use("/", require('./routes/index'));
 
-// app.use("/altsub", require('./routes/altsub/routes'));
+app.use((req, res, next) => {
+    res.locals.user = req.user || null;
+    next();
+});
+
+app.use("/", require('./routes/index'));
 
 app.use(express.static(path.join(__dirname, 'public')));
 
