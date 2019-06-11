@@ -38,5 +38,5 @@ const index = require("./routes/index");
 app.use('/index', index);
 
 app.listen(4444, (err) => {
-    console.log("Listening on port 8000");
+    console.log("Listening on port 4444");
 });

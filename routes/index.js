@@ -3,7 +3,7 @@ const router = express.Router();
 const User = require('../models/User');
 const bcrypt =require('bcryptjs');
 const passport = require("passport");
-
+const { ensureAuthenticated } = require('../config/auth');
 const LocalStrategy = require("passport-local").Strategy;
 
 router.get("/", (req, res) => {
@@ -38,7 +38,7 @@ router.get("/login", (req, res) => {
 });
 
 
-router.get("/dashboard", (req, res) => {
+router.get("/dashboard", ensureAuthenticated ,(req, res) => {
     res.render('dashboard', {
         name: req.user.name
     });
@@ -80,6 +80,9 @@ router.post("/register", (req, res) => {
         }
     })
 });
-
+router.get('/logout', (req, res) => {
+    req.logout();
+    res.redirect('/login');
+})
 
 module.exports = router;
